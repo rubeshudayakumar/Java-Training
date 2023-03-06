@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+/**
+ * @author rubeshu
+ *
+ */
+module dayOne {
+	
+}

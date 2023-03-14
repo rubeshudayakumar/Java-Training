@@ -7,7 +7,6 @@ public class TestClass {
         // creating the object of the class IOException
         IOException ioExceptionObject = new IOException();
         throw ioExceptionObject;
-
     }
 
 }

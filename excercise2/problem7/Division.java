@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Division {
     public static void main(String[] args) {
@@ -11,33 +12,25 @@ public class Division {
             // handling the exception
             try{
                 int numerator,divisor;
-                String data;
-
                 // getting numerator from the user
                 System.out.println("Enter the numerator : ");
-                data = scanner.next();
-
-                // checking if it is equal to q or Q if yes quit the loop
-                if(data.compareTo("q")==0 || data.compareTo("Q")==0){
-                    break;
-                }
-
-                // parsing the numerator assuming it is a string else it throws number format exception
-                numerator = Integer.parseInt(data);
+                numerator = scanner.nextInt();
 
                 // getting the divisor from the user
                 System.out.println("Enter the divisor : ");
-                data = scanner.next();
-
-                // parsing the dinominator
-                divisor = Integer.parseInt(data); 
+                divisor = scanner.nextInt();
 
                 // printing the result
                 System.out.println(numerator+"/"+divisor+" = "+(numerator/divisor));
             }
-
             // catching the number format exception
-            catch(NumberFormatException e){
+            catch(InputMismatchException e){
+                // scanner.next();
+                String data = scanner.next();
+                // checking if it is equal to q or Q if yes quit the loop
+                if(data.compareTo("q")==0 || data.compareTo("Q")==0){
+                    break;
+                }
                 System.out.println("poor input value");
             }
             // catching the arithmetic exception

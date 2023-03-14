@@ -32,11 +32,6 @@ public class Division {
                 // parsing the dinominator
                 divisor = Integer.parseInt(data); 
 
-                // if the divisor is zero throw arithmetic exception
-                if(divisor == 0){
-                    throw new ArithmeticException("Cannot divide by zero");
-                }
-
                 // printing the result
                 System.out.println(numerator+"/"+divisor+" = "+(numerator/divisor));
             }
@@ -47,7 +42,7 @@ public class Division {
             }
             // catching the arithmetic exception
             catch(ArithmeticException e){
-                System.out.println(e);
+                System.out.println("cannot divide by zero");
             }
             // catching the general exception
             catch(Exception e){

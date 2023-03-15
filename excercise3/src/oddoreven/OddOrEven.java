@@ -1,0 +1,29 @@
+package oddoreven;
+
+public class OddOrEven {
+    public static void main(String[] args) {
+//         thread for printing even numbers
+        new Thread(()->{
+            int number = 1;
+            while(number<=100){
+                if(number%2==0){
+                    System.out.println("Even number : "+number);
+                }
+                number++;
+            }
+        }).start();
+
+//         thread for printing the odd numbers
+        new Thread(()->{
+            int number = 1;
+            while(number<=100){
+                if(number%2!=0){
+                    System.out.println("Odd number : "+number);
+                }
+                number++;
+            }
+        }).start();;
+
+    }
+}
+

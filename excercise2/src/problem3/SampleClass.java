@@ -10,8 +10,8 @@ public class SampleClass {
     public void mth2(){
         try{
             // line 1
-            System.exit(0);
-            // return;
+//            System.exit(0);
+             return;
         }
         catch(Exception e){
             System.out.println("catch-mth2");

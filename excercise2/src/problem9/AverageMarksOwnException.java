@@ -2,6 +2,8 @@ package problem9;
 
 import java.util.Scanner;
 
+import problem4.NegativeNumberException;
+
 public class AverageMarksOwnException {
 	public static void main(String[] args) {
 
@@ -20,9 +22,13 @@ public class AverageMarksOwnException {
                 // parsing the mark input throws number format exception else follows the loop
                 int subjectMark = Integer.parseInt(mark); 
                 // adding mark to the total incrementing the markcount
+                
+                if(subjectMark<0) {
+                	throw new NegativeNumberException("Mark should not be negative");
+                }
 
                 if(subjectMark<0 || subjectMark>100){
-                    throw new MarkInvalidException("Please enter the mark between 0 - 100");
+                    throw new OutOfRangeException("Please enter the mark between 0 - 100");
                 }
 
                 total+=subjectMark;
@@ -32,8 +38,11 @@ public class AverageMarksOwnException {
                 // printing the message to the user
                 System.out.println("Marks should be a number");
             }
-            catch(MarkInvalidException e){
-                System.out.println(e);
+            catch(NegativeNumberException e) {
+            	System.out.println(e.getMessage());
+            }
+            catch(OutOfRangeException e){
+                System.out.println(e.getMessage());
             }
             catch(Exception e){
                 System.out.println("give some valid input");

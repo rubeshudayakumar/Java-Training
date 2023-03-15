@@ -13,11 +13,11 @@ public class Main {
 
             // checking if the number is less than zero
             if(number<0){
-                throw new NegativeNumber("Number should not be negative");
+                throw new NegativeNumberException("Number should not be negative");
             }
             
             // catching the exception which is thrown from the try block
-        }catch(NegativeNumber e){
+        }catch(NegativeNumberException e){
             System.out.println(e);
         }
     }

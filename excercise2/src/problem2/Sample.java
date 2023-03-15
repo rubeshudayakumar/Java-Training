@@ -11,7 +11,7 @@ public class Sample {
         try{
             // line 1
             throw new ArithmeticException();
-            return;
+//            return;
         }
         catch(Exception e){
             System.out.println("catch-mth2");

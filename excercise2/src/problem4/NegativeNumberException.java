@@ -1,9 +1,9 @@
 package problem4;
 
-public class NegativeNumber extends Exception{
+public class NegativeNumberException extends Exception{
 
     // creating a constructor to accept the message while creating the exception object
-    public NegativeNumber(String message){
+    public NegativeNumberException(String message){
         super(message);
     }
 

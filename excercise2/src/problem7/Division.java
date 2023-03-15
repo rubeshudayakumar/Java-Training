@@ -31,6 +31,7 @@ public class Division {
                 String data = scanner.next();
                 // checking if it is equal to q or Q if yes quit the loop
                 if(data.compareTo("q")==0 || data.compareTo("Q")==0){
+                	System.out.println("program has finished!");
                     break;
                 }
                 System.out.println("poor input value");

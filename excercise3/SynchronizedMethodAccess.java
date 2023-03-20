@@ -1,15 +1,13 @@
 package excercise3;
 
 public class SynchronizedMethodAccess {
-	
+
 	synchronized public static void displayMessage(String message) throws InterruptedException {
-		System.out.println("[------ "+message+"------]");	
-		
-		Thread.sleep(1000);
+		System.out.println("[------ " + message + "------]");
 	}
-	
+
 	public static void main(String[] args) throws Exception {
-		
+
 		new Thread(() -> {
 			try {
 				displayMessage("Message from thread 1");
@@ -17,7 +15,7 @@ public class SynchronizedMethodAccess {
 				e.printStackTrace();
 			}
 		}).start();
-		
+
 		new Thread(() -> {
 			try {
 				displayMessage("Message from thread 2");
@@ -25,14 +23,14 @@ public class SynchronizedMethodAccess {
 				e.printStackTrace();
 			}
 		}).start();
-		
+
 		new Thread(() -> {
 			try {
-				displayMessage("Message from thread 3");   
+				displayMessage("Message from thread 3");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}).start();
-		
-	}	
+
+	}
 }

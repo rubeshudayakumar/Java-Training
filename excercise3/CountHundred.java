@@ -5,14 +5,14 @@ import java.util.concurrent.Executors;
 
 public class CountHundred {
 	public static void main(String[] args) throws Exception {
-		
-		ExecutorService es = Executors.newSingleThreadExecutor();
-		
-		es.execute(()->{
+
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+		executorService.execute(() -> {
 			int counter = 1;
-			while(counter<=100) {
+			while (counter <= 100) {
 				System.out.println(counter);
-				if(counter%10 == 0) {
+				if (counter % 10 == 0) {
 					System.out.println("10 Numbers completed");
 				}
 				counter++;
@@ -23,7 +23,7 @@ public class CountHundred {
 				}
 			}
 		});
-		
-		es.shutdown();
+
+		executorService.shutdown();
 	}
 }

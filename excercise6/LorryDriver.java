@@ -3,7 +3,6 @@ package excercise6;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
@@ -30,7 +29,7 @@ public class LorryDriver {
 
 		if (takesNextDay.getDayOfMonth() != dateTime.getDayOfMonth()) {
 			LocalTime midnight = LocalTime.MIDNIGHT;
-			LocalDate today = LocalDate.now(ZoneId.of("Asia/Kolkata")).plusDays(1);
+			LocalDate today = LocalDate.now().plusDays(1);
 			LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
 			long minutes = ChronoUnit.MINUTES.between(dateTime, todayMidnight);
 			dateTime = dateTime.plusMinutes(minutes);

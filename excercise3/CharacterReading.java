@@ -7,12 +7,12 @@ public class CharacterReading {
 	public static void main(String[] args) {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-		CharacterReader characterRead = new CharacterReader();
+		CharacterReader characterReader = new CharacterReader();
 
 		while (true) {
 			try {
 				char character = (char) bufferedReader.read();
-				characterRead.displayCharacter(character);
+				characterReader.displayCharacter(character);
 			} catch (Exception e) {
 				System.out.println(e);
 			}

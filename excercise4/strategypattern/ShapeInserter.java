@@ -1,6 +1,6 @@
 package strategypattern;
 
-public class InsertShape {
+public class ShapeInserter {
 	public Shape shape;
 
 	public void insertShape() {

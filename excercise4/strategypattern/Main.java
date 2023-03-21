@@ -9,7 +9,7 @@ public class Main {
 		System.out.println("Enter the name of the shape which you want to draw : ");
 		String shapeName = scanner.next();
 
-		InsertShape shapeInsert = new InsertShape();
+		ShapeInserter shapeInsert = new ShapeInserter();
 		try {
 			shapeInsert.shape = (Shape) Class.forName("strategypattern." + shapeName).getConstructor().newInstance();
 			shapeInsert.shape.drawShape();

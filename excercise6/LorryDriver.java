@@ -25,16 +25,19 @@ public class LorryDriver {
 	}
 
 	public void travelFirstDay() {
+		
+		skipLeaveAtEndAndStart();
 		LocalDateTime takesNextDay = dateTime.plusMinutes((long) totalTimeTaken);
 
 		if (takesNextDay.getDayOfMonth() != dateTime.getDayOfMonth()) {
 			LocalTime midnight = LocalTime.MIDNIGHT;
-			LocalDate today = LocalDate.now().plusDays(1);
+			LocalDate today = dateTime.toLocalDate().plusDays(1);
 			LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
 			long minutes = ChronoUnit.MINUTES.between(dateTime, todayMidnight);
 			dateTime = dateTime.plusMinutes(minutes);
 			totalTimeTaken -= minutes;
-			dateTime = dateTime.plusDays(1).minusHours(15);
+			dateTime = dateTime.withHour(9).plusDays(1);
+			System.out.println(dateTime);
 		} else {
 			if (totalTimeTaken <= 8 * 60) {
 				dateTime = dateTime.plusMinutes((long) totalTimeTaken);
@@ -45,32 +48,61 @@ public class LorryDriver {
 			}
 		}
 	}
-
-	public void travel() {
-		while (totalTimeTaken >= (8 * 60)) {
-			int currentDay = dateTime.getDayOfMonth();
-			if ((currentDay >= 8 && currentDay <= 14 && dateTime.getDayOfWeek().getValue() == 6)
+	
+	public boolean isHoliday() {
+		int currentDay = dateTime.getDayOfMonth();
+		if((currentDay >= 8 && currentDay <= 14 && dateTime.getDayOfWeek().getValue() == 6)
 					|| (dateTime.getDayOfWeek().getValue() == 7)
 					|| (dateTime.getMonth().getValue() == 1 && dateTime.getDayOfMonth() == 1)
 					|| (dateTime.getMonth().getValue() == 1 && dateTime.getDayOfMonth() == 26)
 					|| (dateTime.getMonth().getValue() == 8 && dateTime.getDayOfMonth() == 15)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+
+	public void travel() {
+		while (totalTimeTaken >= (8 * 60)) {
+			if (isHoliday()) {
 				dateTime = dateTime.plusDays(1);
 				continue;
 			}
 			dateTime = dateTime.plusMinutes(8 * 60);
 			totalTimeTaken -= (8 * 60);
-			dateTime = dateTime.plusDays(1).minusHours(8);
+			dateTime = dateTime.plusDays(1).withHour(9);
+			
 		}
-		dateTime.plusMinutes((long) totalTimeTaken);
+		skipLeaveAtEndAndStart();
+		dateTime = dateTime.plusMinutes((long) totalTimeTaken);
 		totalTimeTaken = 0;
+	}
+	
+	public void skipLeaveAtEndAndStart() {
+		while(isHoliday()) {
+			dateTime = dateTime.plusDays(1).withHour(9);
+		}
 	}
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-
-		LocalDateTime dateTime = LocalDateTime.now();
+		int year,month,day,hour,min;
+		System.out.println("Enter year : ");
+		year = scanner.nextInt();
+		System.out.println("Enter month : ");
+		month = scanner.nextInt();
+		System.out.println("Enter day : ");
+		day = scanner.nextInt();
+		System.out.println("Enter hour : ");
+		hour = scanner.nextInt();
+		System.out.println("Enter minutes : ");
+		min = scanner.nextInt();
+		LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour,min);
+		DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 		float speed, distance;
-		System.out.println("CURRENT TIME : " + dateTime);
+		System.out.println("CURRENT TIME : " + date.format(dateTime));
 		System.out.println("Enter the speed of the lorry : ");
 		speed = scanner.nextFloat();
 		System.out.println("Enter the distance to be travelled by the lorry : ");
@@ -80,9 +112,7 @@ public class LorryDriver {
 
 		lorryDriver.calculateTotalTimeTaken();
 		lorryDriver.travelFirstDay();
-		lorryDriver.travel();
-
-		DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		lorryDriver.travel(); 
 
 		System.out.println("Lorry Arrived at : " + date.format(lorryDriver.dateTime));
 		scanner.close();

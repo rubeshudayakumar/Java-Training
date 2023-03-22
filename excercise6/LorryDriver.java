@@ -13,6 +13,8 @@ public class LorryDriver {
 	public float distanceKm;
 	public LocalDateTime dateTime;
 	public float totalTimeTaken;
+	
+	static boolean isHoliday = false;
 
 	public LorryDriver(float speedKmperHr, float distanceKm, LocalDateTime dateTime) {
 		this.speedKmperHr = speedKmperHr;
@@ -25,19 +27,23 @@ public class LorryDriver {
 	}
 
 	public void travelFirstDay() {
-		
+
 		skipLeaveAtEndAndStart();
+		
+		if(isHoliday) return;
+		
 		LocalDateTime takesNextDay = dateTime.plusMinutes((long) totalTimeTaken);
 
 		if (takesNextDay.getDayOfMonth() != dateTime.getDayOfMonth()) {
+
 			LocalTime midnight = LocalTime.MIDNIGHT;
 			LocalDate today = dateTime.toLocalDate().plusDays(1);
 			LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
 			long minutes = ChronoUnit.MINUTES.between(dateTime, todayMidnight);
 			dateTime = dateTime.plusMinutes(minutes);
 			totalTimeTaken -= minutes;
-			dateTime = dateTime.withHour(9).plusDays(1);
-			System.out.println(dateTime);
+			dateTime = dateTime.withHour(9);
+
 		} else {
 			if (totalTimeTaken <= 8 * 60) {
 				dateTime = dateTime.plusMinutes((long) totalTimeTaken);
@@ -45,50 +51,57 @@ public class LorryDriver {
 			} else {
 				totalTimeTaken -= (8 * 60);
 				dateTime = dateTime.plusMinutes(8 * 60);
+				dateTime = dateTime.plusDays(1).withHour(9);
 			}
+
 		}
+		System.out.println(totalTimeTaken);
+		System.out.println(dateTime);
 	}
-	
+
 	public boolean isHoliday() {
 		int currentDay = dateTime.getDayOfMonth();
-		if((currentDay >= 8 && currentDay <= 14 && dateTime.getDayOfWeek().getValue() == 6)
-					|| (dateTime.getDayOfWeek().getValue() == 7)
-					|| (dateTime.getMonth().getValue() == 1 && dateTime.getDayOfMonth() == 1)
-					|| (dateTime.getMonth().getValue() == 1 && dateTime.getDayOfMonth() == 26)
-					|| (dateTime.getMonth().getValue() == 8 && dateTime.getDayOfMonth() == 15)) {
+		if ((currentDay >= 8 && currentDay <= 14 && dateTime.getDayOfWeek().getValue() == 6)
+				|| (dateTime.getDayOfWeek().getValue() == 7)
+				|| (dateTime.getMonth().getValue() == 1 && dateTime.getDayOfMonth() == 1)
+				|| (dateTime.getMonth().getValue() == 1 && dateTime.getDayOfMonth() == 26)
+				|| (dateTime.getMonth().getValue() == 8 && dateTime.getDayOfMonth() == 15)) {
+			isHoliday = true;
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
 
 	public void travel() {
+		skipLeaveAtEndAndStart();
 		while (totalTimeTaken >= (8 * 60)) {
 			if (isHoliday()) {
 				dateTime = dateTime.plusDays(1);
+
 				continue;
 			}
 			dateTime = dateTime.plusMinutes(8 * 60);
 			totalTimeTaken -= (8 * 60);
 			dateTime = dateTime.plusDays(1).withHour(9);
-			
+
 		}
 		skipLeaveAtEndAndStart();
 		dateTime = dateTime.plusMinutes((long) totalTimeTaken);
+
 		totalTimeTaken = 0;
 	}
-	
+
 	public void skipLeaveAtEndAndStart() {
-		while(isHoliday()) {
+
+		while (isHoliday()) {
 			dateTime = dateTime.plusDays(1).withHour(9);
 		}
 	}
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		int year,month,day,hour,min;
+		int year, month, day, hour, min;
 		System.out.println("Enter year : ");
 		year = scanner.nextInt();
 		System.out.println("Enter month : ");
@@ -99,7 +112,7 @@ public class LorryDriver {
 		hour = scanner.nextInt();
 		System.out.println("Enter minutes : ");
 		min = scanner.nextInt();
-		LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour,min);
+		LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
 		DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 		float speed, distance;
 		System.out.println("CURRENT TIME : " + date.format(dateTime));
@@ -112,7 +125,7 @@ public class LorryDriver {
 
 		lorryDriver.calculateTotalTimeTaken();
 		lorryDriver.travelFirstDay();
-		lorryDriver.travel(); 
+		lorryDriver.travel();
 
 		System.out.println("Lorry Arrived at : " + date.format(lorryDriver.dateTime));
 		scanner.close();

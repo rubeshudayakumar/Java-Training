@@ -52,12 +52,9 @@ public class LorryDriver {
 				totalTimeTaken -= (8 * 60);
 				dateTime = dateTime.plusMinutes(8 * 60);
 				dateTime = dateTime.plusDays(1).withHour(9);
-				System.out.println(dateTime);
 			}
 
 		}
-		System.out.println(totalTimeTaken);
-		System.out.println(dateTime);
 	}
 
 	public boolean isHoliday() {
@@ -101,18 +98,7 @@ public class LorryDriver {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		int year, month, day, hour, min;
-		System.out.println("Enter year : ");
-		year = scanner.nextInt();
-		System.out.println("Enter month : ");
-		month = scanner.nextInt();
-		System.out.println("Enter day : ");
-		day = scanner.nextInt();
-		System.out.println("Enter hour : ");
-		hour = scanner.nextInt();
-		System.out.println("Enter minutes : ");
-		min = scanner.nextInt();
-		LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+		LocalDateTime dateTime = LocalDateTime.now();
 		DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 		float speed, distance;
 		System.out.println("CURRENT TIME : " + date.format(dateTime));

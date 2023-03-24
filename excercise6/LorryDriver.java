@@ -32,7 +32,7 @@ public class LorryDriver {
 		
 		if(isHoliday) return;
 		
-		LocalDateTime takesNextDay = dateTime.plusMinutes((long) totalTimeTaken);
+		LocalDateTime takesNextDay = dateTime.plusMinutes(8*60);
 
 		if (takesNextDay.getDayOfMonth() != dateTime.getDayOfMonth()) {
 
@@ -52,6 +52,7 @@ public class LorryDriver {
 				totalTimeTaken -= (8 * 60);
 				dateTime = dateTime.plusMinutes(8 * 60);
 				dateTime = dateTime.plusDays(1).withHour(9);
+				System.out.println(dateTime);
 			}
 
 		}
@@ -78,7 +79,6 @@ public class LorryDriver {
 		while (totalTimeTaken >= (8 * 60)) {
 			if (isHoliday()) {
 				dateTime = dateTime.plusDays(1);
-
 				continue;
 			}
 			dateTime = dateTime.plusMinutes(8 * 60);
@@ -119,7 +119,7 @@ public class LorryDriver {
 		System.out.println("Enter the speed of the lorry : ");
 		speed = scanner.nextFloat();
 		System.out.println("Enter the distance to be travelled by the lorry : ");
-		distance = scanner.nextInt();
+		distance = scanner.nextFloat();
 
 		LorryDriver lorryDriver = new LorryDriver(speed, distance, dateTime);
 

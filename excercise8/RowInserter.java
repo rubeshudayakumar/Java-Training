@@ -12,10 +12,9 @@ class InsertRow {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root@123");
 			stmt = con.createStatement();
-			int i1 = stmt.executeUpdate(" insert into pradeep values (001,'sakre',23)");
-			int i2 = stmt.executeUpdate(" insert into pradeep values (001,'pradeep',223)");
-			int i3 = stmt.executeUpdate(" insert into pradeep values (001,'vivek',243)");
-			System.out.println("No of rows inserted : " + (i1 + i2 + i3));
+			boolean row1 = stmt.execute(" insert into pradeep values (001,'sakre',23)");
+			boolean row2 = stmt.execute(" insert into pradeep values (001,'pradeep',223)");
+			boolean row3 = stmt.execute(" insert into pradeep values (001,'vivek',243)");
 			
 			rs=stmt.executeQuery("select * from pradeep");
 
@@ -23,9 +22,7 @@ class InsertRow {
 				System.out.println(rs.getInt(1) + " " + rs.getString(2) + "" + rs.getInt(3));
 			}
 
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}

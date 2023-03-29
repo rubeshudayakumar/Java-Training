@@ -12,8 +12,7 @@ class CreateTable {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root@123");
 			stmt = con.createStatement();
-			int i = stmt.executeUpdate("create table pradeep(empno integer,ename varchar(20),deptno integer)");
-			System.err.println("No of tables created : "+i);
+			boolean noOfRowsAffected = stmt.execute("create table pradeep(empno integer,ename varchar(20),deptno integer)");
 		} catch (Exception e) {
 			System.out.println(e);
 		}

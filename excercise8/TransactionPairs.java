@@ -29,22 +29,22 @@ public class TransactionPairs {
 			for (int i = 0; i < len; i++) {
 				updateSales.setInt(1, salesForWeek[i]);
 				updateSales.setString(2, coffees[i]);
-				updateSales.executeUpdate();
+				updateSales.execute();
 				updateTotal.setInt(1, salesForWeek[i]);
 				updateTotal.setString(2, coffees[i]);
-				updateTotal.executeUpdate();
-				con.commit();
+				updateTotal.execute();
 			}
+			con.commit();
 			con.setAutoCommit(true);
 			updateSales.close();
 			updateTotal.close();
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				String c = rs.getString("COF_NAME");
-				int s = rs.getInt("SALES");
-				int t = rs.getInt("TOTAL");
-				System.out.println(c + " " + s + " " + t);
+				String coffeeName = rs.getString("COF_NAME");
+				int sales = rs.getInt("SALES");
+				int total = rs.getInt("TOTAL");
+				System.out.println(coffeeName + " " + sales + " " + total);
 			}
 			stmt.close();
 			con.close();

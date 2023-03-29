@@ -2,17 +2,25 @@ package countuptoctrlz;
 
 import java.util.Scanner;
 
-public class Main {
-	public static void main(String[] args) throws Exception{
-		Scanner scanner = new Scanner(System.in);
+
+
+public class Main{
+	
+	public static void main(String[] args){
 		
-		String line;
-		
-		while(scanner.hasNext()) {
-			line = scanner.nextLine();
-			System.out.println("No of chars : "+line.length());
+		try (
+				Scanner scanner = new Scanner(System.in);
+			){
+			
+			String line;
+			while(scanner.hasNext()) {
+				line = scanner.nextLine();
+				System.out.println("No of chars : "+line.length());
+			}
+			System.out.println("Program exited");
 		}
-		System.out.println("Program exited");
-		scanner.close();
+		catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 }

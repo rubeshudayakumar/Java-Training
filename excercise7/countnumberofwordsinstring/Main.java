@@ -1,32 +1,34 @@
 package countnumberofwordsinstring;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) throws Exception{
-		Scanner scanner = new Scanner(System.in);
-		String s;
-		System.out.println("Enter the string : ");
-		s = scanner.nextLine();
-		byte stringInBytes[] = s.getBytes();
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(stringInBytes)));
-		
-		int c;
-		
-		int wordCount = 0;
-		
-		while((c=bufferedReader.read())!=-1) {
-			if(c==32) {
-				wordCount++;
+	public static void main(String[] args) {
+		try(
+				Scanner scanner = new Scanner(System.in);
+			){
+			String text;
+			System.out.println("Enter the string : ");
+			text = scanner.nextLine();
+			
+			text = text.trim();
+			
+			int wordCount = 1;
+			
+			for (int i = 0; i < text.length() - 1; i++)
+	        {
+	            if ((text.charAt(i) == ' ') && (text.charAt(i + 1) != ' '))
+	            {
+	                wordCount++;
+	            }
+	        }	
+			if(text.trim().length()==0) {
+				wordCount = 0;
 			}
+			System.out.println("No of words in the string is : "+wordCount);
 		}
-		wordCount++;
-		
-		System.out.println("No of words in the string is : "+wordCount);
-		
-		scanner.close();
+		catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 }

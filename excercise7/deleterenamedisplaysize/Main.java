@@ -12,7 +12,6 @@ public class Main {
 		if(isRenamed) {
 			System.out.println("The file is successfully renamed!");
 		}
-	
 		
 		File fileToBeDeleted = new File("/Users/rubeshu/Documents/Java Eclipse/excercise7/src/deleterenamedisplaysize/fileToBeDeleted.txt");
 		

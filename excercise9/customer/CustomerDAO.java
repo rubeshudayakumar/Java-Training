@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CustomerDAO {
+public class CustomerDao {
 	
-	private static CustomerDAO dao;
-	synchronized public static CustomerDAO getSingleTon() {
+//	declaring singleton variable
+	private static CustomerDao dao;
+	
+//	creating the static method for creating the singleton variable and if it is the first time it will return new object or else it will return previous object
+	synchronized public static CustomerDao getSingleTon() {
 		if(dao==null) {
-			dao=new CustomerDAO();
+			dao=new CustomerDao();
 			return dao;
 		}
 		else{
@@ -22,43 +25,47 @@ public class CustomerDAO {
 		}
 	}
 	
-	synchronized public static CustomerDAO getPrototype() {
+//	providing the prototype method if it requires to create multiple objects other than singleton 
+	synchronized public static CustomerDao getPrototype() {
 		if(dao==null) {
-			dao=new CustomerDAO();
+			dao=new CustomerDao();
 			return dao;
 		}
 		else {
 			return dao.getClone();
 		}
 	}
-	synchronized public CustomerDAO getClone() {
+	
+//	clone method to create clone object
+	synchronized public CustomerDao getClone() {
 		try {
-			return (CustomerDAO)super.clone();
+			return (CustomerDao)super.clone();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	private CustomerDAO() {
+//	constructor to indicate the object creation
+	private CustomerDao() {
 		System.out.println("customer dao");
 	}
 
-	
-	public CustomerDTO findByPrimaryKey(int id,Connection con) {
+//	creating find by id method to find the data by id 
+	public CustomerDto findByPrimaryKey(int id,Connection con) {
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from CUSTOMER where cust_id=?");		
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			
-			CustomerDTO dto = CustomerDTO.getInstance();
+			CustomerDto dto = CustomerDto.getInstance();
 			
 			if(rs.next()) {
-				dto.setCust_id(id);
-				dto.setCust_name(rs.getString(2));
-				dto.setCust_address(rs.getString(3));
-				dto.setCust_city(rs.getString(4));
+				dto.setCustId(id);
+				dto.setCustName(rs.getString(2));
+				dto.setCustAddress(rs.getString(3));
+				dto.setCustCity(rs.getString(4));
 				return dto;
 			}
 			
@@ -72,23 +79,24 @@ public class CustomerDAO {
 		return null;
 	}
 	
-	public List<CustomerDTO> findAll(Connection con){
+//	creating a method which finds the list of all users from the table
+	public List<CustomerDto> findAll(Connection con){
 		
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs =  stmt.executeQuery("select * from CUSTOMER");
 			
-			List<CustomerDTO> custList = new  ArrayList<>();
+			List<CustomerDto> custList = new  ArrayList<>();
 			
 			while(rs.next()) {
-				CustomerDTO custDTO = CustomerDTO.getInstance();
+				CustomerDto custDto = CustomerDto.getInstance();
 				
-				custDTO.setCust_id(rs.getInt(1));
-				custDTO.setCust_name(rs.getString(2));
-				custDTO.setCust_address(rs.getString(3));
-				custDTO.setCust_city(rs.getString(4));
+				custDto.setCustId(rs.getInt(1));
+				custDto.setCustName(rs.getString(2));
+				custDto.setCustAddress(rs.getString(3));
+				custDto.setCustCity(rs.getString(4));
 				
-				custList.add(custDTO);
+				custList.add(custDto);
 			}
 			return custList;
 			
@@ -99,6 +107,7 @@ public class CustomerDAO {
 		return null;
 	}
 	
+//	creating the update method to update the column of all the rows in the table
 	public int updateCustomer(String currentCityName,String cityNameToBeChanged,Connection conn) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement("update CUSTOMER set cust_city=? where cust_city=?");
@@ -114,6 +123,7 @@ public class CustomerDAO {
 		return 0;
 	}
 	
+//	creating  a method to delete a row by id
 	public int deleteCustomer(int id,Connection conn) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement("delete from CUSTOMER where cust_id = ?");
@@ -127,13 +137,14 @@ public class CustomerDAO {
 		return 0;
 	}
 	
-	public int insertCustomer(CustomerDTO custDTO,Connection conn) {
+//	creating a method to insert a new record into the table
+	public int insertCustomer(CustomerDto custDto,Connection conn) {
 		
 		try {
 			PreparedStatement stmt = conn.prepareStatement("insert into CUSTOMER(cust_name,cust_address,cust_city) values(?,?,?)");
-			stmt.setString(1, custDTO.getCust_name());
-			stmt.setString(2, custDTO.getCust_address());
-			stmt.setString(3, custDTO.getCust_city());
+			stmt.setString(1, custDto.getCustName());
+			stmt.setString(2, custDto.getCustAddress());
+			stmt.setString(3, custDto.getCustCity());
 			int rowsInserted = stmt.executeUpdate();
 			conn.commit();
 			return rowsInserted;

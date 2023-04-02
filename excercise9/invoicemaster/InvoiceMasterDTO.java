@@ -4,71 +4,80 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-public class InvoiceMasterDTO implements Serializable,Cloneable,Comparable<InvoiceMasterDTO>{
-	private int inv_id;
-	private Date inv_date;
-	private int cust_id;
-	private float inv_amt;
+public class InvoiceMasterDto implements Serializable,Cloneable,Comparable<InvoiceMasterDto>{
+//	declaring all the dto variables 
+	private int invId;
+	private Date invDate;
+	private int custId;
+	private float invAmt;
 	private int discount;
 	
-	private InvoiceMasterDTO(){
+//	constructor to indicate the object creation
+	private InvoiceMasterDto(){
 		System.out.println("Item master object created!");
 	}
 	
+//	overriding the compareTo() method to compare between the objects
 	@Override
-	public int compareTo(InvoiceMasterDTO o) {
-		return	this.inv_id-o.inv_id;
+	public int compareTo(InvoiceMasterDto o) {
+		return	this.invId-o.invId;
 	}
 	
-	private static InvoiceMasterDTO dto;
-	synchronized public static InvoiceMasterDTO getInstance() {
+//	declaring the singleton variable
+	private static InvoiceMasterDto dto;
+	
+//	providing the prototype method if it requires to create multiple objects other than singleton 
+	synchronized public static InvoiceMasterDto getInstance() {
 		if(dto==null) {
-			dto=new InvoiceMasterDTO();
+			dto=new InvoiceMasterDto();
 			return dto;
 		}
 		else {
 			return dto.createClone();
 		}
 	}
-	synchronized public InvoiceMasterDTO createClone() {
+	
+//	clone method to create clone object
+	synchronized public InvoiceMasterDto createClone() {
 		try {
-			return (InvoiceMasterDTO)super.clone();
+			return (InvoiceMasterDto)super.clone();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public int getInv_id() {
-		return inv_id;
+//	<---------- START : GETTERS AND SETTERS ---------->
+	public int getInvId() {
+		return invId;
 	}
 
-	public void setInv_id(int inv_id) {
-		this.inv_id = inv_id;
+	public void setInvId(int invId) {
+		this.invId = invId;
 	}
 
-	public Date getInv_date() {
-		return inv_date;
+	public Date getInvDate() {
+		return invDate;
 	}
 
-	public void setInv_date(Date date) {
-		this.inv_date = date;
+	public void setInvDate(Date date) {
+		this.invDate = date;
 	}
 
-	public int getCust_id() {
-		return cust_id;
+	public int getCustId() {
+		return custId;
 	}
 
-	public void setCust_id(int cust_id) {
-		this.cust_id = cust_id;
+	public void setCustId(int custId) {
+		this.custId = custId;
 	}
 
-	public float getInv_amt() {
-		return inv_amt;
+	public float getInvAmt() {
+		return invAmt;
 	}
 
-	public void setInv_amt(float inv_amt) {
-		this.inv_amt = inv_amt;
+	public void setInvAmt(float invAmt) {
+		this.invAmt = invAmt;
 	}
 
 	public int getDiscount() {
@@ -78,12 +87,13 @@ public class InvoiceMasterDTO implements Serializable,Cloneable,Comparable<Invoi
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
+//	<---------- END : GETTERS AND SETTERS ---------->
 
+//	providing hashcode and equals object to check the equality of the object
 	@Override
 	public int hashCode() {
-		return Objects.hash(cust_id, discount, inv_amt, inv_date, inv_id);
+		return Objects.hash(custId, discount, invAmt, invDate, invId);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -92,15 +102,16 @@ public class InvoiceMasterDTO implements Serializable,Cloneable,Comparable<Invoi
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		InvoiceMasterDTO other = (InvoiceMasterDTO) obj;
-		return cust_id == other.cust_id && discount == other.discount
-				&& Float.floatToIntBits(inv_amt) == Float.floatToIntBits(other.inv_amt)
-				&& Objects.equals(inv_date, other.inv_date) && inv_id == other.inv_id;
+		InvoiceMasterDto other = (InvoiceMasterDto) obj;
+		return custId == other.custId && discount == other.discount
+				&& Float.floatToIntBits(invAmt) == Float.floatToIntBits(other.invAmt)
+				&& Objects.equals(invDate, other.invDate) && invId == other.invId;
 	}
 
+//	providing toString() method to print the object data
 	@Override
 	public String toString() {
-		return "InvoiceMasterDTO [inv_id=" + inv_id + ", inv_date=" + inv_date + ", cust_id=" + cust_id + ", inv_amt="
-				+ inv_amt + ", discount=" + discount + "]";
+		return "InvoiceMasterDTO [invId=" + invId + ", invDate=" + invDate + ", custId=" + custId + ", invAmt="
+				+ invAmt + ", discount=" + discount + "]";
 	}
 }

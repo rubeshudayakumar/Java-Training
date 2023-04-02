@@ -3,62 +3,71 @@ package itemmaster;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ItemMasterDTO implements Serializable,Cloneable,Comparable<ItemMasterDTO>{
-	private int item_id;
-	private String item_name;
-	private float item_price;
+public class ItemMasterDto implements Serializable,Cloneable,Comparable<ItemMasterDto>{
+//	declaring all the dto variables 
+	private int itemId;
+	private String itemName;
+	private float itemPrice;
 	private int unit;
 	
-	private ItemMasterDTO(){
+//	constructor to indicate the object creation
+	private ItemMasterDto(){
 		System.out.println("Item master object created!");
 	}
 	
+//	overriding the compareTo() method to compare between the objects
 	@Override
-	public int compareTo(ItemMasterDTO o) {
-		return	this.item_id-o.item_id;
+	public int compareTo(ItemMasterDto o) {
+		return	this.itemId-o.itemId;
 	}
 	
-	private static ItemMasterDTO dto;
-	synchronized public static ItemMasterDTO getInstance() {
+//	declaring the singleton variable
+	private static ItemMasterDto dto;
+	
+//	providing the prototype method if it requires to create multiple objects other than singleton 
+	synchronized public static ItemMasterDto getInstance() {
 		if(dto==null) {
-			dto=new ItemMasterDTO();
+			dto=new ItemMasterDto();
 			return dto;
 		}
 		else {
 			return dto.createClone();
 		}
 	}
-	synchronized public ItemMasterDTO createClone() {
+	
+//	clone method to create clone object
+	synchronized public ItemMasterDto createClone() {
 		try {
-			return (ItemMasterDTO)super.clone();
+			return (ItemMasterDto)super.clone();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public int getItem_id() {
-		return item_id;
+//	<---------- START : GETTERS AND SETTERS ---------->
+	public int getItemId() {
+		return itemId;
 	}
 
-	public void setItem_id(int item_id) {
-		this.item_id = item_id;
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
-	public String getItem_name() {
-		return item_name;
+	public String getItemName() {
+		return itemName;
 	}
 
-	public void setItem_name(String item_name) {
-		this.item_name = item_name;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
-	public float getItem_price() {
-		return item_price;
+	public float getItemPrice() {
+		return itemPrice;
 	}
 
-	public void setItem_price(float item_price) {
-		this.item_price = item_price;
+	public void setItemPrice(float itemPrice) {
+		this.itemPrice = itemPrice;
 	}
 
 	public int getUnit() {
@@ -68,12 +77,13 @@ public class ItemMasterDTO implements Serializable,Cloneable,Comparable<ItemMast
 	public void setUnit(int unit) {
 		this.unit = unit;
 	}
-
+//	<---------- END : GETTERS AND SETTERS ---------->
+	
+//	providing hashcode and equals object to check the equality of the object
 	@Override
 	public int hashCode() {
-		return Objects.hash(item_id, item_name, item_price, unit);
+		return Objects.hash(itemId, itemName, itemPrice, unit);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -82,14 +92,15 @@ public class ItemMasterDTO implements Serializable,Cloneable,Comparable<ItemMast
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemMasterDTO other = (ItemMasterDTO) obj;
-		return item_id == other.item_id && Objects.equals(item_name, other.item_name)
-				&& Float.floatToIntBits(item_price) == Float.floatToIntBits(other.item_price) && unit == other.unit;
+		ItemMasterDto other = (ItemMasterDto) obj;
+		return itemId == other.itemId && Objects.equals(itemName, other.itemName)
+				&& Float.floatToIntBits(itemPrice) == Float.floatToIntBits(other.itemPrice) && unit == other.unit;
 	}
 
+//	providing toString() method to print the object data
 	@Override
 	public String toString() {
-		return "ItemMasterDTO [item_id=" + item_id + ", item_name=" + item_name + ", item_price=" + item_price
+		return "ItemMasterDTO [itemId=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice
 				+ ", unit=" + unit + "]";
 	}
 

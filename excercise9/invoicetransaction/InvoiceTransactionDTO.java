@@ -3,54 +3,63 @@ package invoicetransaction;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class InvoiceTransactionDTO implements Serializable,Cloneable,Comparable<InvoiceTransactionDTO>{
-	private int inv_id;
-	private int item_id;
+public class InvoiceTransactionDto implements Serializable,Cloneable,Comparable<InvoiceTransactionDto>{
+//	declaring all the dto variables 
+	private int invId;
+	private int itemId;
 	private int qty;
 	private float price;
 	
-	private InvoiceTransactionDTO(){
+//	constructor to indicate the object creation
+	private InvoiceTransactionDto(){
 		System.out.println("Item master object created!");
 	}
 	
+//	overriding the compareTo() method to compare between the objects
 	@Override
-	public int compareTo(InvoiceTransactionDTO o) {
-		return	this.inv_id-o.inv_id;
+	public int compareTo(InvoiceTransactionDto o) {
+		return	this.invId-o.invId;
 	}
 	
-	private static InvoiceTransactionDTO dto;
-	synchronized public static InvoiceTransactionDTO getInstance() {
+//	declaring the singleton variable
+	private static InvoiceTransactionDto dto;
+	
+//	providing the prototype method if it requires to create multiple objects other than singleton 
+	synchronized public static InvoiceTransactionDto getInstance() {
 		if(dto==null) {
-			dto=new InvoiceTransactionDTO();
+			dto=new InvoiceTransactionDto();
 			return dto;
 		}
 		else {
 			return dto.createClone();
 		}
 	}
-	synchronized public InvoiceTransactionDTO createClone() {
+	
+//	clone method to create clone object
+	synchronized public InvoiceTransactionDto createClone() {
 		try {
-			return (InvoiceTransactionDTO)super.clone();
+			return (InvoiceTransactionDto)super.clone();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public int getInv_id() {
-		return inv_id;
+//	<---------- START : GETTERS AND SETTERS ---------->
+	public int getInvId() {
+		return invId;
 	}
 
-	public void setInv_id(int inv_id) {
-		this.inv_id = inv_id;
+	public void setInvId(int invId) {
+		this.invId = invId;
 	}
 
-	public int getItem_id() {
-		return item_id;
+	public int getItemId() {
+		return itemId;
 	}
 
-	public void setItem_id(int item_id) {
-		this.item_id = item_id;
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	public int getQty() {
@@ -68,12 +77,13 @@ public class InvoiceTransactionDTO implements Serializable,Cloneable,Comparable<
 	public void setPrice(float price) {
 		this.price = price;
 	}
+//	<---------- END : GETTERS AND SETTERS ---------->
 
+//	providing hashcode and equals object to check the equality of the object
 	@Override
 	public int hashCode() {
-		return Objects.hash(inv_id, item_id, price, qty);
+		return Objects.hash(invId, itemId, price, qty);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -82,14 +92,15 @@ public class InvoiceTransactionDTO implements Serializable,Cloneable,Comparable<
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		InvoiceTransactionDTO other = (InvoiceTransactionDTO) obj;
-		return inv_id == other.inv_id && item_id == other.item_id
+		InvoiceTransactionDto other = (InvoiceTransactionDto) obj;
+		return invId == other.invId && itemId == other.itemId
 				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price) && qty == other.qty;
 	}
 
+//	providing toString() method to print the object data
 	@Override
 	public String toString() {
-		return "InvoiceTransactionDTO [inv_id=" + inv_id + ", item_id=" + item_id + ", qty=" + qty + ", price=" + price
+		return "InvoiceTransactionDTO [invId=" + invId + ", itemId=" + itemId + ", qty=" + qty + ", price=" + price
 				+ "]";
 	}
 	
